@@ -6,7 +6,7 @@ namespace App7
     public class Patient
     {
         // Использование Queue по условию задачи;
-        Queue<QueuePatients> queuePatients = new Queue<QueuePatients>();
+        Queue<QueuePatients> patientInQueue = new Queue<QueuePatients>();
 
         /// <summary>
         /// Добавление нового пациента в очередь.
@@ -15,9 +15,9 @@ namespace App7
         /// <exception cref="ArgumentException">В случае, если пациент с таким Id уже есть в очереди.</exception>
         public void AddPatient(QueuePatients newPatient)
         {
-            if (!queuePatients.Contains(newPatient))
+            if (!patientInQueue.Contains(newPatient))
             {
-                queuePatients.Enqueue(newPatient);
+                patientInQueue.Enqueue(newPatient);
             }
             else
             {
@@ -33,9 +33,9 @@ namespace App7
         /// <exception cref="InvalidOperationException">В случае, если очередь пуста.</exception>
         public QueuePatients RemovePatirnt(QueuePatients findPatientId)
         {
-            if (queuePatients.Count > 0)
+            if (patientInQueue.Count > 0)
             {
-                return queuePatients.Dequeue();
+                return patientInQueue.Dequeue();
             }
             else
             {
@@ -51,7 +51,7 @@ namespace App7
         /// <exception cref="ArgumentException">В случае, если такой записи нет в очереди.</exception>
         public QueuePatients FindPatientId(int patientId)
         {
-            foreach (QueuePatients queuePatient in queuePatients)
+            foreach (QueuePatients queuePatient in patientInQueue)
             {
                 if (queuePatient.Id == patientId)
                 {
@@ -67,7 +67,7 @@ namespace App7
         /// <returns>Все элементы очереди.</returns>
         public Queue<QueuePatients> PatientsInQueue()
         {
-            return queuePatients;
+            return patientInQueue;
         }
     }
 }
