@@ -1,73 +1,107 @@
 using System;
-using System.Collections.Generic;
 
 namespace App7
 {
     public class Patient
     {
-        // Использование Queue по условию задачи;
-        Queue<QueuePatients> patientInQueue = new Queue<QueuePatients>();
-
+        private int _id;
+        private string _name;
+        private string _surname;
+        private int _daysBeforeAppointment;
+        
         /// <summary>
-        /// Добавление нового пациента в очередь.
+        /// Конструктор для полей пациента;
         /// </summary>
-        /// <param name="newPatient">Новая запись</param>
-        /// <exception cref="ArgumentException">В случае, если пациент с таким Id уже есть в очереди.</exception>
-        public void AddPatient(QueuePatients newPatient)
+        /// <param name="id">Айди пациента</param>
+        /// <param name="name">Имя пациента</param>
+        /// <param name="surname">Фамилия пациента</param>
+        public Patient(int id, string name, string surname, int daysBeforeAppointment)
         {
-            if (!patientInQueue.Contains(newPatient))
-            {
-                patientInQueue.Enqueue(newPatient);
-            }
-            else
-            {
-                throw new ArgumentException("Пациент с таким Id уже есть в очереди.");
-            }
+            Name = name;
+            Id = id;
+            Surname = surname;
+            DaysBeforeAppointment = daysBeforeAppointment;
         }
 
         /// <summary>
-        /// Извлечение первого пациента из очереди.
+        /// Проверка на корректность дней до сеанса к врачу;
         /// </summary>
-        /// <param name="findPatientId">Поиск по id</param>
-        /// <returns>Первый пациент в очереди</returns>
-        /// <exception cref="InvalidOperationException">В случае, если очередь пуста.</exception>
-        public QueuePatients RemovePatirnt(QueuePatients findPatientId)
-        {
-            if (patientInQueue.Count > 0)
+        /// <exception cref="ArgumentOutOfRangeException">В случае, если отрицателдьное количество.</exception>
+        public int DaysBeforeAppointment { get => _daysBeforeAppointment;
+            set
             {
-                return patientInQueue.Dequeue();
-            }
-            else
-            {
-                throw new InvalidOperationException("Очередь пуста.");
-            }
-        }
-
-        /// <summary>
-        /// Поиск записи пациента по id в очереди.
-        /// </summary>
-        /// <param name="patientId"></param>
-        /// <returns>Пациент из очереди</returns>
-        /// <exception cref="ArgumentException">В случае, если такой записи нет в очереди.</exception>
-        public QueuePatients FindPatientId(int patientId)
-        {
-            foreach (QueuePatients queuePatient in patientInQueue)
-            {
-                if (queuePatient.Id == patientId)
+                if (value > -1 && value != null)
                 {
-                    return queuePatient;
+                    _daysBeforeAppointment = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException("Дней до приема не может быть отрицательное количество или null.");
                 }
             }
-            throw new ArgumentException("Записи не найдено.");
         }
 
         /// <summary>
-        /// Вывод всех пациентов в очереди.
+        /// Проверка на корректность индификационного номера пациента;
         /// </summary>
-        /// <returns>Все элементы очереди.</returns>
-        public Queue<QueuePatients> PatientsInQueue()
+        /// <exception cref="ArrayTypeMismatchException">В случае если, номер введен некорректно</exception>
+        public int Id { get => _id;
+            set
+            {
+                if (value > 0 && value != null)
+                {
+                    _id = value;
+                }
+                else
+                {
+                    throw new ArrayTypeMismatchException("Id пациента меньше 0 или null.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Проверка на корректность введенного имени пациента;
+        /// </summary>
+        /// <exception cref="AggregateException">В случае если имя не введено или пустая строка.</exception>
+        public string Name { get => _name;
+            set
+            {
+                if (value != null && value != "")
+                {
+                    _name = value.Trim();
+                }
+                else
+                {
+                    throw new AggregateException("Имя пациента null или пустая строка.");
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Проверка на корректность введенной фамилии пациента;
+        /// </summary>
+        /// <exception cref="ArgumentException">В случае если фамилия не введена или пустая строка.</exception>
+        public string Surname { get => _surname;
+            set
+            {
+                if (value != null && value != "")
+                {
+                    _surname = value.Trim();
+                }
+                else
+                {
+                    throw new ArgumentException("Фамилия пациента null или пустая строка.");
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Преобразование данных о пациенте в строку;
+        /// </summary>
+        /// <returns>Данные пациента</returns>
+        public override string ToString()
         {
-            return patientInQueue;
+            return $"Id: {Id}, Name: {Name}, Surname: {Surname}, Days Before Appointment: {DaysBeforeAppointment};";
         }
     }
 }

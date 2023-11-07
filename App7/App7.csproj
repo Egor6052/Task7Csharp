@@ -40,9 +40,9 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="folder\Patient.cs" />
-        <Compile Include="folder\Program.cs" />
         <Compile Include="folder\QueuePatients.cs" />
+        <Compile Include="folder\Program.cs" />
+        <Compile Include="folder\Patient.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <ItemGroup>
